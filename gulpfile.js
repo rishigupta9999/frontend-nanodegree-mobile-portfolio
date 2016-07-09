@@ -5,7 +5,20 @@ var image = require('gulp-image');
 var imageResize = require('gulp-image-resize');
 var htmlmin = require('gulp-htmlmin');
 var cleanCSS = require('gulp-clean-css');
+var rename = require("gulp-rename");
 
+
+var image_compress_options = {
+                    pngquant: true,
+                    optipng: true,
+                    zopflipng: false,
+                    advpng: false,
+                    jpegRecompress: false,
+                    jpegoptim: true,
+                    mozjpeg: false,
+                    gifsicle: false,
+                    svgo: false
+                };
 
 gulp.task('clean', function(clean_files) {
    return del(['dist/**'], clean_files);
@@ -25,17 +38,7 @@ gulp.task('copy-files', function() {
         .pipe(gulp.dest('dist/css'));
 
     gulp.src('img/**')
-                .pipe(image({
-                    pngquant: true,
-                    optipng: true,
-                    zopflipng: false,
-                    advpng: false,
-                    jpegRecompress: false,
-                    jpegoptim: true,
-                    mozjpeg: false,
-                    gifsicle: false,
-                    svgo: false
-                }))
+                .pipe(image(image_compress_options))
                 .pipe(gulp.dest('dist/img'));
 
     gulp.src('js/**')
@@ -50,17 +53,7 @@ gulp.task('copy-files', function() {
 
 
     gulp.src('views/images/pizza.png')
-                .pipe(image({
-                                pngquant: true,
-                                optipng: true,
-                                zopflipng: false,
-                                advpng: false,
-                                jpegRecompress: false,
-                                jpegoptim: true,
-                                mozjpeg: false,
-                                gifsicle: false,
-                                svgo: false
-                            }))
+                .pipe(image(image_compress_options))
                 .pipe(gulp.dest('dist/views/images'));
 
     gulp.src('views/images/pizzeria.jpg')
@@ -68,17 +61,16 @@ gulp.task('copy-files', function() {
                     width: 720,
                     height: 540
                 }))
-                .pipe(image({
-                                pngquant: true,
-                                optipng: true,
-                                zopflipng: false,
-                                advpng: false,
-                                jpegRecompress: false,
-                                jpegoptim: true,
-                                mozjpeg: false,
-                                gifsicle: false,
-                                svgo: false
-                            }))
+                .pipe(image(image_compress_options))
+                .pipe(gulp.dest('dist/views/images'));
+
+    gulp.src('views/images/pizzeria.jpg')
+                .pipe(imageResize({
+                    width: 100,
+                    height: 75
+                }))
+                .pipe(image(image_compress_options))
+                .pipe(rename("pizzeria-thumb.jpg"))
                 .pipe(gulp.dest('dist/views/images'));
 
     gulp.src('views/js/**')

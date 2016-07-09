@@ -2,6 +2,9 @@ var gulp = require('gulp');
 var del = require('del');
 var runSequence = require('run-sequence');
 var image = require('gulp-image');
+var imageResize = require('gulp-image-resize');
+var htmlmin = require('gulp-htmlmin');
+var cleanCSS = require('gulp-clean-css');
 
 
 gulp.task('clean', function(clean_files) {
@@ -11,9 +14,14 @@ gulp.task('clean', function(clean_files) {
 gulp.task('copy-files', function() {
 
     gulp.src('*.html')
+            .pipe(htmlmin({collapseWhitespace: true}))
             .pipe(gulp.dest('dist/'));
 
     gulp.src('css/**')
+        .pipe(cleanCSS({debug: true}, function(details) {
+                    console.log(details.name + ': ' + details.stats.originalSize);
+                    console.log(details.name + ': ' + details.stats.minifiedSize);
+                }))
         .pipe(gulp.dest('dist/css'));
 
     gulp.src('img/**')
@@ -41,7 +49,25 @@ gulp.task('copy-files', function() {
             .pipe(gulp.dest('dist/views/images'));
 
 
-    gulp.src('views/images/**')
+    gulp.src('views/images/pizza.png')
+                .pipe(image({
+                                pngquant: true,
+                                optipng: true,
+                                zopflipng: false,
+                                advpng: false,
+                                jpegRecompress: false,
+                                jpegoptim: true,
+                                mozjpeg: false,
+                                gifsicle: false,
+                                svgo: false
+                            }))
+                .pipe(gulp.dest('dist/views/images'));
+
+    gulp.src('views/images/pizzeria.jpg')
+                .pipe(imageResize({
+                    width: 720,
+                    height: 540
+                }))
                 .pipe(image({
                                 pngquant: true,
                                 optipng: true,

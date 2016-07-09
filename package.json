@@ -19,10 +19,10 @@
   "devDependencies": {
     "del": "^2.2.1",
     "gulp": "^3.9.1",
-    "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^2.0.11",
+    "gulp-htmlmin": "^2.0.0",
     "gulp-image": "^2.0.1",
-    "gulp-imagemin": "^3.0.1",
-    "imagemin-mozjpeg": "^6.0.0",
+    "gulp-image-resize": "^0.9.0",
     "run-sequence": "^1.2.2"
   }
 }

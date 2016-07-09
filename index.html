@@ -24,15 +24,20 @@
     <script async src="http://www.google-analytics.com/analytics.js"></script>
     <script async src="js/perfmatters.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js" async></script>
-
     <script>
-      WebFont.load({
+       WebFontConfig = {
         google: {
           families: ['Open Sans:400, 700']
         }
-      });
+       };
+
+       (function(d) {
+          var wf = d.createElement('script'), s = d.scripts[0];
+          wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js';
+          s.parentNode.insertBefore(wf, s);
+       })(document);
     </script>
+
 
   </head>
 

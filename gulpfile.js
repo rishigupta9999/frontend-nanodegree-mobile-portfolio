@@ -6,7 +6,7 @@ var imageResize = require('gulp-image-resize');
 var htmlmin = require('gulp-htmlmin');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
-
+var inlinesource = require('gulp-inline-source');
 
 var image_compress_options = {
                     pngquant: true,
@@ -27,6 +27,7 @@ gulp.task('clean', function(clean_files) {
 gulp.task('copy-files', function() {
 
     gulp.src('*.html')
+            .pipe(inlinesource())
             .pipe(htmlmin({collapseWhitespace: true}))
             .pipe(gulp.dest('dist/'));
 

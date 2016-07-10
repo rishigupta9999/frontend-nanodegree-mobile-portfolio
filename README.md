@@ -44,3 +44,6 @@ Install these using the standard method
 - Cache the result of ```document.body.scrollTop``` since that also doesn't change per loop element
 - Don't query for ```.mover``` every frame, just do it once since it doesn't change
 - Eliminate the determineDx function.  Nothing in that function needs to be done per element.  All pizzas are the same size, so just apply the calculations based on the first pizza's width.  And hoist all calculations out of the loop, including the ```newwidth``` string generation which seems particularly expensive.
+
+## Final Site
+See the dist directory for the final generated website

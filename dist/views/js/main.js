@@ -144,6 +144,7 @@ pizzaIngredients.crusts = [
 
 var items = null;
 var pizzaContainers = null;
+var sizeValue = document.getElementById("sizeSlider").value
 
 // Name generator pulled from http://saturdaykid.com/usernames/generator.html
 // Capitalizes first letter of each word
@@ -426,14 +427,7 @@ var resizePizzas = function(size) {
 
   randomPizzas = document.querySelector("#randomPizzas");
 
-   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  function determineDx (elem, size) {
-    var oldWidth = elem.offsetWidth;
-    var windowWidth = randomPizzas.offsetWidth;
-    var oldSize = oldWidth / windowWidth;
-
-    // Changes the slider value to a percent width
-    function sizeSwitcher (size) {
+  function sizeSwitcher (size) {
       switch(size) {
         case "1":
           return 0.25;
@@ -444,24 +438,24 @@ var resizePizzas = function(size) {
         default:
           console.log("bug in sizeSwitcher");
       }
-    }
-
-    var newSize = sizeSwitcher(size);
-    var dx = (newSize - oldSize) * windowWidth;
-
-    return dx;
   }
+
+  var newSize = sizeSwitcher(size);
+  var windowWidth = randomPizzas.offsetWidth;
+  var oldSize = pizzaContainers[0].offsetWidth / windowWidth;
+  var dx = (newSize - oldSize) * windowWidth;
+  var newwidth = (pizzaContainers[0].offsetWidth + dx) + 'px';
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
     for (var i = 0; i < pizzaContainers.length; i++) {
-      var dx = determineDx(pizzaContainers[i], size);
-      var newwidth = (pizzaContainers[i].offsetWidth + dx) + 'px';
       pizzaContainers[i].style.width = newwidth;
     }
   }
 
   changePizzaSizes(size);
+
+  sizeValue = size;
 
   // User Timing API is awesome
   window.performance.mark("mark_end_resize");
